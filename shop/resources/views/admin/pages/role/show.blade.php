@@ -19,7 +19,7 @@
       <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header" >
-                <h1> Role list</h1>
+                <h1> Role Detail</h1>
                 
                 @if (session()->has('success'))
                             <div class="alert alert-success">
@@ -38,22 +38,7 @@
                   <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                  <div class="search-container" style="flex-grow: 1; display: flex; align-items: center;">
-                    <div style=" width: 80%; "> <!-- Thay đổi ở đây -->
-                      <input name="search" type="text" id="searchInput" placeholder="Search..." style="width: 100%; padding: 10px;"value="{{ isset($searchTerm) ? $searchTerm : '' }}">
-                    </div>
-              
-                    <button type="button" onclick="search()" style="margin-left: 10px; background-color: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px;">
-                        Search
-                    </button>
-                    <button style="background-color: #ff0000; color: white; border: none; padding: 10px; border-radius: 5px; margin-left:10px">
-                      <a href="{{ route('roles.index') }}" style="text-decoration: none; color: inherit;">
-                          Reset
-                      </a>
-                    </button>
-                  </div>
-                </div>
+                
                 <table class="table table-hover">
                     <tr>
                         <th>#</th>
@@ -61,7 +46,7 @@
                         <th>Display-Name</th> 
                         <th>Actionn</th>
                     </tr>
-                    @foreach ($roles as $role)
+                    
                     <tr>
                         <td>{{$role->id}}</td>
                         <td>{{$role->name}}</td>
@@ -88,9 +73,9 @@
                         </div>
                         </td> 
                     </tr>
-                    @endforeach
+                    
                 </table
-                {{ $roles->links() }}
+                
             </div>
         </div>
       
