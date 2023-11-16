@@ -51,16 +51,17 @@ class UpdateRoleTest extends TestCase
      */    
     public function authenticated_user_can_update_role_if_role_exists_and_data_is_valid()
     {
+
         $this->actingAs(User::factory()->make());
         $role = Role::factory()->create();
+        
         $dataUpdate = [
             'name' => $this->faker->unique()->word,
             'display_name' => $this->faker->word,
             'group' => $this->faker->word,
         ];
-       
         $response = $this->put($this->updateRoleRoute($role->id), $dataUpdate);
-        
+        dd($response->baseResponse->headers->get('Location'));
         $response->assertStatus(Response::HTTP_FOUND);
         
         $this->assertDatabaseHas('roles',[

@@ -53,4 +53,8 @@ class RoleRepository
     {
         $role->delete();
     }
+    public function getRoles()
+    {
+        return $this->roles->all();
+    }
 }

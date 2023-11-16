@@ -8,10 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use App\Traits\HandleUpdateImageTrait;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HandleUpdateImageTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +26,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'gender',
     ];
 
     /**
@@ -45,6 +52,10 @@ class User extends Authenticatable
     ];
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'user_role');
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+    public function images(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

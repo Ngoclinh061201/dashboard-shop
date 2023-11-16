@@ -77,7 +77,7 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateRoleREquest $request, string $id)
+    public function update(CreateRoleRequest $request, string $id)
     {
         $dataUpdate = $request->all();
         $this->roleService->updateRole($id, $dataUpdate);
