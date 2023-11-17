@@ -9,41 +9,35 @@ use Illuminate\Support\Arr;
 
 class CategoryService
 {
-    protected $CategoryRepository;
+    protected $categoryRepository;
 
-    public function __construct(CategoryRepository $CategoryRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->CategoryRepository = $CategoryRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    // public function getLatestcategories()
-    // {
-    //     $categories = $this->CategoryRepository->latestcategories();
+    public function getLatestCategories()
+    {
+        $categories = $this->categoryRepository->latestcategories();
 
-    //     return $this->CategoryRepository->paginatecategories($categories, 5);
-    // }
+        return $this->categoryRepository->paginatecategories($categories, 5);
+    }
 
-    // public function searchcategories($searchTerm){
-    //     $categories = $this->CategoryRepository->searchcategories($searchTerm);
-    //     return $this->CategoryRepository->paginatecategories($categories, 5);
+    public function searchCategories($searchTerm){
+        $categories = $this->categoryRepository->searchCategories($searchTerm);
+        return $this->categoryRepository->paginateCategories($categories, 5);
 
-    // }
+    }
+    public function getParents(){
+        return $this->categoryRepository->getParents();
+    }
 
-    // public function createCategory( $request)
-    // {
+    public function createCategory( $request)
+    {
        
-    //     $dataCreate = $request->all();
-    //     $dataCreate['password'] = Hash::make($request->password);
-    //     $dataCreate['image'] = $this->CategoryRepository->saveImage($request);
-    //     $category = $this->CategoryRepository->create($dataCreate);
-    //     $category->images()->create(["url" => $dataCreate['image']]);
-
-    //     if (isset($dataCreate['role_ids'])) {
-    //         $category->roles()->attach($dataCreate['role_ids']);
-    //     }
-        
-
-    // }
+        $dataCreate = $request->all();
+        $this->categoryRepository->create($dataCreate);
+    }
     // public function getCategoryById(string $id)
     // {
     //     return $this->CategoryRepository->getById($id);

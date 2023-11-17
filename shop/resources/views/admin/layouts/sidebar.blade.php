@@ -50,21 +50,21 @@
         </li>
     
         
-        <li class="nav-item">
-            <a class="nav-link text-white " href="./virtual-reality.html">
-                
+        {{-- <li class="nav-item">
+            <a class="nav-link text-white {{request()->routeIs('products.*') ? 'bg-gradient-primary active' : ''}}" href="{{route('products.index')}}">
+                  
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons opacity-10">view_in_ar</i>
                 </div>
                 
                 <span class="nav-link-text ms-1">Product</span>
             </a>
-        </li>
+        </li> --}}
   
         
         <li class="nav-item">
-            <a class="nav-link text-white " href="./rtl.html">
-                
+            <a class="nav-link text-white {{request()->routeIs('categories.*') ? 'bg-gradient-primary active' : ''}}" href="{{route('categories.index')}}">
+                   
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                 </div>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Users')
+@section('title', 'Categories')
 @section('content')
   
   <!-- Navbar -->
@@ -19,7 +19,7 @@
       <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header" >
-                <h1> User list</h1>
+                <h1> Categoy list</h1>
                 
                 @if (session()->has('success'))
                             <div class="alert alert-success">
@@ -35,7 +35,7 @@
                     <i class="fas fa-arrow-left"></i> 
                   </a>
               
-                  <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                  <a href="{{ route('categories.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -48,7 +48,7 @@
                         Search
                     </button>
                     <button style="background-color: #ff0000; color: white; border: none; padding: 10px; border-radius: 5px; margin-left:10px">
-                      <a href="{{ route('users.index') }}" style="text-decoration: none; color: inherit;">
+                      <a href="{{ route('categories.index') }}" style="text-decoration: none; color: inherit;">
                           Reset
                       </a>
                     </button>
@@ -57,38 +57,28 @@
                 <table class="table table-hover">
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
                         <th>Name</th>
-                        <th>Email</th> 
-                        <th>Phone</th> 
-                        <th>Action</th>
+                        <th>Parent_name</th> 
+                        <th>Action</th> 
                     </tr>
-                    @foreach ($users as $user)
+                   @foreach ($categories as $category)
                     <tr>
-                        <td>{{$user->id}}</td>
-                        <td>
-                          @if($user->images->isNotEmpty())
-                              <img src="{{ asset('upload/users/'.$user->images->first()->url) }}" alt="User Image" width="100px" height="100px">
-                          @else
-                              <h4>#</h4>
-                          @endif
-                      </td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->phone}}</td>
+                        <td>{{$category->id}}</td>
+                        
+                        <td>{{$category->name}}</td>
+                        <td>{{$category->parent_name}}</td>
+                      
                         <td>
                           <div style="display: flex;">
-                          {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a> --}}
-                          <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">
+                         
+                          <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info">
                             <i class="fas fa-eye"></i> 
                           </a>
-                          <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" style="margin-left: 5px;">
+                          <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning" style="margin-left: 5px;">
                             <i class="fas fa-edit"></i> 
                           </a>
 
-
-                          {{-- <button href="{{ route('users.destroy', $user->id) }}"  class="btn btn-danger">Delete</button> --}}
-                          <form method="POST" action="{{ route('users.destroy',  $user->id) }}" onsubmit="return confirm('Are you sure you want to delete?')">
+                          <form method="POST" action="{{ route('categories.destroy',  $category->id) }}" onsubmit="return confirm('Are you sure you want to delete?')">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger" type="submit" style="margin-left: 5px;" data-toggle="tooltip" data-placement="top" title="Delete">
@@ -98,9 +88,9 @@
                         </div>
                         </td> 
                     </tr>
-                    @endforeach
+                    @endforeach 
                 </table
-                {{  $users->links()  }}
+                {{  $categories->links()  }}
             </div>
         </div>
       

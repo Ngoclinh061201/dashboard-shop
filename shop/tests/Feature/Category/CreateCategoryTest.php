@@ -1,15 +1,12 @@
 <?php
 
-namespace Tests\Feature\Role;
+namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Support\Facades\DB;
-use App\Models\Role;
-use App\Models\User;
-use Illuminate\Http\Response;
 
-
-class CreateRoleTest extends TestCase
+class CreateCategoryTest extends TestCase
 {
     public function storeNewRoleRoute ()
     {
@@ -107,6 +104,4 @@ class CreateRoleTest extends TestCase
     }
     
 }
-
-
 

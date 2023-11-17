@@ -7,59 +7,60 @@ use Illuminate\Support\Facades\Hash;
 
 class CategoryRepository
 {
-    protected $users;
+    protected $categories;
 
-    public function __construct(User $users)
+    public function __construct(Category $categories)
     {
-        $this->users = $users;
+        $this->categories = $categories;
     }
 
-    public function searchUsers($searchTerm)
+    public function searchCategories($searchTerm)
     {
-        return $this->users->where('name', 'like', '%' . $searchTerm . '%')
-            ->orWhere('email', 'like', '%' . $searchTerm . '%')
-            ->orWhere('phone', 'like', '%' . $searchTerm . '%');
+        return $categories= $this->categories->search($searchTerm);
+    }
+    public function getParents(){
+        return $this->categories->getParents();
     }
 
-    public function latestusers()
+    public function latestCategories()
     {
-        return $this->users->latest('updated_at');
+        return $this->categories->latest('updated_at');
     }
 
-    public function paginateUsers($users, $perPage)
+    public function paginateCategories($categories, $perPage)
     {
-        return $users->paginate($perPage);
+        return $categories->paginate($perPage);
     }
 
     public function create($dataCreate)
     {
-        return $user =  $this->users->create($dataCreate);
+        return $categories =  $this->categories->create($dataCreate);
         
     }
 
     public function getById(string $id)
     {
-        return $this->users->findOrFail($id);
+        return $this->categories->findOrFail($id);
     }
 
-    public function getUserWithRoles(string $id)
+    public function getCategoryWithRoles(string $id)
     {
-        return $this->users->with('roles')->findOrFail($id);
+        return $this->categories->with('roles')->findOrFail($id);
     }
 
-    public function update(User $user, array $data)
+    public function update(Category $category, array $data)
     {
        
-        $user = $user->update($data);
-        return $user;
+        $category = $category->update($data);
+        return $category;
     }
     
-    public function delete(User $user)
+    public function delete(Category $category)
     {
-        $user->delete();
+        $category->delete();
     }
     public function saveImage($request){
-        return $this->users->saveImage($request);
+        return $this->categories->saveImage($request);
     }
     
 }

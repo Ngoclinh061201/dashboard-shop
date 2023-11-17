@@ -24,10 +24,9 @@ class UserService
         return $this->userRepository->paginateUsers($Users, 5);
     }
 
-    public function searchUsers($searchTerm){
-        $Users = $this->userRepository->searchUsers($searchTerm);
-        return $this->userRepository->paginateUsers($Users, 5);
-
+    public function searchUsers($searchTerm)
+    {
+        return $this->userRepository->searchUsers($searchTerm);
     }
 
     public function createUser( $request)
@@ -72,7 +71,7 @@ class UserService
 
         }
 
-        $currentImage = $user->images() ? $user->images()->first()->url : '';
+        $currentImage = $user->images()->count()>0 ? $user->images()->first()->url : '';
         $dataUpdate['image'] = $user->updateImage($request, $currentImage);
 
         $user->images()->delete();

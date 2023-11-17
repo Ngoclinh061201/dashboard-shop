@@ -16,9 +16,9 @@ class UserRepository
 
     public function searchUsers($searchTerm)
     {
-        return $this->users->where('name', 'like', '%' . $searchTerm . '%')
-            ->orWhere('email', 'like', '%' . $searchTerm . '%')
-            ->orWhere('phone', 'like', '%' . $searchTerm . '%');
+        
+        $users= $this->users->search($searchTerm);
+        return $users = $this->paginateUsers($users, 5);
     }
 
     public function latestusers()

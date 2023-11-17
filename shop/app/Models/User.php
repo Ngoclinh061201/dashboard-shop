@@ -59,4 +59,11 @@ class User extends Authenticatable
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->where(function($query) use ($searchTerm) {
+            $query->where('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('email', 'like', '%' . $searchTerm . '%');
+        });
+    }
 }

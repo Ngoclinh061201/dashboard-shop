@@ -27,6 +27,7 @@ class UserController extends Controller
         $searchTerm = $request->input('search', '');
         if ($request->has('search')) {
             $users = $this->userService->searchUsers($searchTerm);
+            
         }else {
             $users = $this->userService->getLatestUsers();
         }
@@ -51,6 +52,7 @@ class UserController extends Controller
         
         $this->userService->createUser($request);
         return redirect()->route('users.index')->with('success', 'Create successfully');
+        
     }
 
     /**
