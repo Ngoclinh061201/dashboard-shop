@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        dd(1);
+        
         $this->userService->createUser($request);
         return redirect()->route('users.index')->with('success', 'Create successfully');
     }
@@ -67,7 +67,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        // dd(1);
+        
         $user = $this->userService->getUserWithRoles($id);
        
         $roles = $this->roleService->getRoles()->groupBy('group');
@@ -80,9 +80,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        // $dataUpdate = $request->except('password');
-        // $dataUpdate['password'] = Hash::make($request->password);
-        $user = $this->userService->updateUser($id, $request->all());
+        
+        $user = $this->userService->updateUser($id, $request);
         return redirect()->route('users.index')->with('success', 'Update successfully');
     }
 

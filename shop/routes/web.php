@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('admin.pages.dashboard.index');
 })->middleware('auth')->name('dashboard');
-Route::resource('/roles',RoleController::class)->middleware('auth');
-ROute::resource('/users',UserController::class)->middleware('auth');
-
+Route::resource('roles',RoleController::class)->middleware('auth');
+Route::resource('users',UserController::class)->middleware('auth');
+Route::resource('categories',CategoryController::class)->middleware('auth');
+// Route::resource('/products',ProductController::class)->middleware('auth');
 require __DIR__.'/auth.php';

@@ -52,7 +52,7 @@
                     <tr>
                       <td>{{$user->id}}</td>
                       <td>
-                        @if($user->images)
+                        @if($user->images->isNotEmpty())
                         
                             <img src="{{ asset('upload/users/'.$user->images()->latest()->first()->url) }}" alt="User Image" width="200px" height="200px">
                         @else

@@ -32,10 +32,16 @@ class UserService
 
     public function createUser( $request)
     {
-        $dataCreate = $request;
+       
+        $dataCreate = $request->all();
         $dataCreate['password'] = Hash::make($request->password);
         $dataCreate['image'] = $this->userRepository->saveImage($request);
         $user = $this->userRepository->create($dataCreate);
+        $user->images()->create(["url" => $dataCreate['image']]);
+
+        if (isset($dataCreate['role_ids'])) {
+            $user->roles()->attach($dataCreate['role_ids']);
+        }
         
 
     }
@@ -50,15 +56,31 @@ class UserService
     
     public function deleteUser(string $id)
     {
-        $user = $this->userRepository->getById($id);
+        $user = $this->userRepository->getUserWithRoles($id);
+        $currentImage = $user->images()->count() > 0 ? $user->images()->first()->url : '';
+        $user->images()->delete();
+        $user->deleteImage($currentImage);
         $this->userRepository->delete($user);
 
     }
-    public function updateUser(string $id, array $data){
-        $dataUpdate = Arr::except($data, ['password']);
-        $dataUpdate['password'] = Hash::make($data['password']);
-        $user = $this->userRepository->getuserWithRoles($id);
-       
+    public function updateUser(string $id, $request){
+        
+        $dataUpdate = $request->except('password');
+        $user = $this->userRepository->getUserWithRoles($id);
+        if($request->password){
+            $dataUpdate['password'] = Hash::make($request['password']);
+
+        }
+
+        $currentImage = $user->images() ? $user->images()->first()->url : '';
+        $dataUpdate['image'] = $user->updateImage($request, $currentImage);
+
+        $user->images()->delete();
+        $user->images()->create(["url" => $dataUpdate['image']]);
+
+        if (isset($dataUpdate['role_ids'])) {
+            $user->roles()->sync($dataUpdate['role_ids']);
+        }
         $user = $this->userRepository->update($user, $dataUpdate);
         return $user;
     }

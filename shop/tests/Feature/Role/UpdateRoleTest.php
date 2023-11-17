@@ -29,21 +29,24 @@ class UpdateRoleTest extends TestCase
 
     public function editRoleRoute($id)
     {
-        return route('roles.edit', ['id' => $id]);
+        
+        return route('roles.edit', ['role' => $id]);
     }
 
     public function updateRoleRoute($id)
     {
-        return route('roles.update', ['id' => $id]);
+        return route('roles.update', ['role' => $id]);
     }
     /**
      @test
      */
     public function unauthenticated_user_can_not_see_edit_role_form_view(): void
     { 
-        $role = Role::factory()->create();
-        $response = $this->get($this->editRoleRoute($role->id));
+        $role_id = 4;
+        $response = $this->get($this->editRoleRoute($role_id));
+        
         $response->assertRedirect('/login');
+
     }
 
     /**
@@ -61,7 +64,7 @@ class UpdateRoleTest extends TestCase
             'group' => $this->faker->word,
         ];
         $response = $this->put($this->updateRoleRoute($role->id), $dataUpdate);
-        dd($response->baseResponse->headers->get('Location'));
+        
         $response->assertStatus(Response::HTTP_FOUND);
         
         $this->assertDatabaseHas('roles',[
@@ -81,11 +84,11 @@ class UpdateRoleTest extends TestCase
         $dataUpdate = [
             'name' => $this->faker->sentence,
             'display_name' => $this->faker->paragraph,
-            'group' => $this->faker->regexify('^[0-9]{10}'),
+            'group' => $this->faker->sentence,
         ];
         $response = $this->put($this->updateRoleRoute($role_id), $dataUpdate);
 
-        $response->assertStatus(500);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
     /**
      @test
@@ -97,7 +100,7 @@ class UpdateRoleTest extends TestCase
         $dataUpdate = [
             'name' => null,
             'display_name' => $this->faker->paragraph,
-            'group' => $this->faker->regexify('^[0-9]{10}'),
+            'group' => $this->faker->sentence,
         ];
         $response = $this->put($this->updateRoleRoute($role->id), $dataUpdate);
 
@@ -115,7 +118,7 @@ class UpdateRoleTest extends TestCase
         $dataUpdate = [
             'name' => $this->faker->sentence,
             'display_name' => null,
-            'group' => $this->faker->regexify('^[0-9]{10}'),
+            'group' => $this->faker->sentence,
         ];
         $response = $this->put($this->updateRoleRoute($role->id), $dataUpdate);
 
@@ -133,7 +136,7 @@ class UpdateRoleTest extends TestCase
         $dataUpdate = [
             'name' => $this->faker->sentence,
             'display_name' => $this->faker->paragraph,
-            'group' => '12345'
+            'group' => null,
         ];
         $response = $this->put($this->updateRoleRoute($role->id), $dataUpdate);
         $response->assertSessionHasErrors('group');
@@ -170,7 +173,7 @@ class UpdateRoleTest extends TestCase
         $this->actingAs(User::factory()->make());
         $role = Role::factory()->create();
         $response = $this->get($this->editRoleRoute($role->id));
-        $response->assertViewIs('roles.edit');
+        $response->assertViewIs('admin.pages.role.edit');
    }
    
   

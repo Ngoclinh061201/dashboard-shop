@@ -1,11 +1,11 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Hash;
 
 
-class UserRepository
+class CategoryRepository
 {
     protected $users;
 
