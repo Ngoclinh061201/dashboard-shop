@@ -38,10 +38,12 @@
                     <div class="input-group input-group-static mb-4">
                         <label name="parent_id" class="ms-0">Parent Categories</label>
                         <select name="parent_id"  class="form-control">
+                            <option value=""> Parent category</option>
                             @foreach ($parentCategories as $item)
                                 <option value="{{$item->id}}" {{old('parent_id') == $item->id ? 'selected' : ''}}>
                                     {{$item->name}}</option>
                             @endforeach
+                            
                           
                         </select>
                         @error('parent_id')

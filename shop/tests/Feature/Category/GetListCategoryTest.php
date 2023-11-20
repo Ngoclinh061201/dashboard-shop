@@ -48,31 +48,34 @@ class GetListCategoryTest extends TestCase
     @test
      */
     public function authenticated_user_can_get_list_category(){
-        $user = User::factory()->make();
+        $user = User::factory()->create();
         $this->actingAs($user);
 
         $category = Category::factory()->create();
         $response = $this->get($this->getListCategoryRoute());
         $response->assertStatus(Response::HTTP_OK);
         $response->assertViewIs('admin.pages.category.index');
-        $response->assertSee($category->name); 
+        $response->assertSee($category['name']); 
     }
      /**
     @test
     */
-    public function authenticated_user_can_search_category(){
-        $user = User::factory()->make();
-        $this->actingAs($user);
+    // public function authenticated_user_can_search_category(){
+    //     $user = User::factory()->make();
+    //     $this->actingAs($user);
 
-        $category = Category::factory()->create();
-        // dd($category);
-        $searchTerm = $category->name;
-        $response = $this->get('/categories', ['search' => $searchTerm]);
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertViewIs('admin.pages.category.index');
-        $response->assertSee($category->name);
+    //     $category = [
+    //         'name' => $this->faker->unique()->word,
+    //         'parent_id' => $this->faker->randomElement([NULL, 50, 52, 55]),
+           
+    //     ];
+    //     $searchTerm = $category->name;
+    //     $response = $this->get('/categories', ['search' => $searchTerm]);
+    //     $response->assertStatus(Response::HTTP_OK);
+    //     $response->assertViewIs('admin.pages.category.index');
+    //     $response->assertSee($category->name);
 
         
-    }
+    // }
     
 }

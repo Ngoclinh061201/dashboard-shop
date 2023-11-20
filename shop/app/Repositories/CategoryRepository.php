@@ -43,9 +43,13 @@ class CategoryRepository
         return $this->categories->findOrFail($id);
     }
 
-    public function getCategoryWithRoles(string $id)
+    public function getCategoryWithParents(string $id)
     {
-        return $this->categories->with('roles')->findOrFail($id);
+        return $this->categories->with('parent')->findOrFail($id);
+    }
+    public function getCategoryWithChildrens(string $id)
+    {
+        return $this->categories->with('childrens')->findOrFail($id);
     }
 
     public function update(Category $category, array $data)

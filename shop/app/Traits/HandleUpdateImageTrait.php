@@ -6,7 +6,7 @@ use Intervention\Image\Facades\Image;
 
 trait HandleUpdateImageTrait 
 {
-    protected $path = "upload/users/";
+    protected $path = "upload/";
     public function veryfy($request){
         return $request->has('image');
     }

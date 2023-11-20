@@ -31,7 +31,7 @@
 
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                  <a href="javascript:history.back()"}}" class="btn btn-info">
+                  <a href="javascript:history.back()" class="btn btn-info">
                     <i class="fas fa-arrow-left"></i> 
                   </a>
               
@@ -78,13 +78,16 @@
                             <i class="fas fa-edit"></i> 
                           </a>
 
-                          <form method="POST" action="{{ route('categories.destroy',  $category->id) }}" onsubmit="return confirm('Are you sure you want to delete?')">
-                            @method('DELETE')
+                          <form action="{{ route('categories.destroy', $category->id) }}"
+                            id="form-delete{{$category->id}}" method="post">
                             @csrf
-                            <button class="btn btn-danger" type="submit" style="margin-left: 5px;" data-toggle="tooltip" data-placement="top" title="Delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            @method('delete')
+
                           </form>
+
+                          <button class="btn btn-delete btn-danger" style = " margin-left: 5px;" data-id={{ $category->id }}>
+                            <i class="fas fa-trash-alt"></i></button>
+
                         </div>
                         </td> 
                     </tr>
@@ -95,8 +98,12 @@
         </div>
       
       </div>
-      <script>
-        function search() {
+      
+      
+@endsection
+@section('scripts')
+<script>
+  function search() {
             // Lấy giá trị từ ô nhập
             var searchTerm = document.getElementById('searchInput').value;
       
@@ -117,6 +124,6 @@
               var urlWithoutQuery = window.location.href.split('?')[0];
               history.pushState({}, document.title, urlWithoutQuery);
           }
-      </script>
-      
+</script>
+
 @endsection

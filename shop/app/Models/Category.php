@@ -32,6 +32,10 @@ class Category extends Model
     }
     public function getParents(){
       
-        return Category::where('parent_id', 0)->get(['id','name']);
+        return Category::whereNull('parent_id')->get(['id','name']);
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'category_product');
     }
 }

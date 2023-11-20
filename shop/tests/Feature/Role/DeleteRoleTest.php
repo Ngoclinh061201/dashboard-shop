@@ -11,8 +11,7 @@ use App\Models\Role;
 use Illuminate\Http\Response;
 
 
-class DeleteRoleTest extends TestCase
-{
+class DeleteRoleTest extends TestCase {
     public function setUp(): void
     {
         parent::setUp();

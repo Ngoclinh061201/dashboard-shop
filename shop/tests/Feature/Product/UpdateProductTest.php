@@ -1,17 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Product;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Http\Response;
 
-
-class UpdateCategoryTest extends TestCase
+class UpdateProductTest extends TestCase
 {
    
     public function setUp(): void

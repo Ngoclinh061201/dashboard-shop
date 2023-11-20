@@ -16,8 +16,11 @@
 <html lang="en">
 
 <head>
+ 
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset ('admin/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset ('admin/assets/img/favicon.png')}}">
 
@@ -43,6 +46,7 @@
   @include('admin.layouts.sidebar')
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     @yield('content')
+   
     <div class="fixed-plugin">
       <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
         <i class="material-icons py-2">settings</i>
@@ -124,7 +128,8 @@
   <script src="{{asset ('admin/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
   <script src="{{asset ('admin/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
   <script src="{{asset ('admin/assets/js/plugins/chartjs.min.js')}}"></script>
-  <script>
+  {{-- <script>
+    
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
     new Chart(ctx, {
@@ -370,7 +375,7 @@
         },
       },
     });
-  </script>
+  </script> --}}
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -384,6 +389,15 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset ('admin/assets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
+  <!-- them jquery cdn -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <!-- Thêm SweetAlert từ CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="{{asset ('admin/assets/base/base.js')}}"></script>
+  
+  @yield('scripts') 
 </body>
 
 </html>

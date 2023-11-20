@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Product;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Http\Response;
 
-class CreateCategoryTest extends TestCase
+class CreateProductTest extends TestCase
 {
     public function storeNewcategoryRoute ()
     {
@@ -108,4 +108,3 @@ class CreateCategoryTest extends TestCase
     }
     
 }
-

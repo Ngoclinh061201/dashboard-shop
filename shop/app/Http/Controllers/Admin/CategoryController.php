@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Http\Requests\Category\CreateCategoryRequest;
-
+use App\Http\Requests\Category\UpdateCategoryRequest;
 class CategoryController extends Controller
 {
     /**
@@ -54,7 +54,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = $this->categoryService->getCategoryWithChildrens($id);
+        return view('admin.pages.category.show', compact('category'));
     }
 
     /**
@@ -62,15 +63,19 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $parentCategories = $this->categoryService->getParents();
+        $category = $this->categoryService->getCategoryWithChildrens($id);
+        return view ('admin.pages.category.edit', compact('parentCategories', 'category'));
+
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category = $this->categoryService->updateCategory($id, $request );
+        return redirect()->route('categories.index')->with('success', 'edit successfully');
     }
 
     /**
@@ -78,6 +83,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = $this->categoryService->deleteCategory($id);
+        return redirect()->route('categories.index')->with('success', 'edit successfully');
+
     }
 }

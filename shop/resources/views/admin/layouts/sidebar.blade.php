@@ -50,7 +50,7 @@
         </li>
     
         
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link text-white {{request()->routeIs('products.*') ? 'bg-gradient-primary active' : ''}}" href="{{route('products.index')}}">
                   
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -59,7 +59,7 @@
                 
                 <span class="nav-link-text ms-1">Product</span>
             </a>
-        </li> --}}
+        </li>
   
         
         <li class="nav-item">

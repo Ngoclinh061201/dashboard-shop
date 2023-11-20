@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Create User')
+@section('title', 'Create Category')
 @section('content')
   
   <!-- Navbar -->
@@ -8,9 +8,9 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>
+              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Category</li>
             </ol>
-            <h6 class="font-weight-bolder mb-0">User</h6>
+            <h6 class="font-weight-bolder mb-0">Category</h6>
           </nav>
 
         </div>
@@ -19,7 +19,7 @@
       <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header" >
-                <h1> User Detail</h1>
+                <h1> Category Detail</h1>
                 
                 @if (session()->has('success'))
                             <div class="alert alert-success">
@@ -30,64 +30,53 @@
             </div>
 
             <div class="card-body">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                  <a href="javascript:history.back()"}}" class="btn btn-info">
-                    <i class="fas fa-arrow-left"></i> 
-                  </a>
-              
-                  <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <a href="javascript:history.back()" class="btn btn-info">
+                  <i class="fas fa-arrow-left"></i> 
+                </a>
+            
+                <a href="{{ route('categories.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+              </div>
 
-                
-                <table class="table table-hover">
-                    <tr>
+              
+              <table class="table table-hover">
+                  <tr>
                       <th>#</th>
-                      <th>Image</th>
                       <th>Name</th>
-                      <th>Email</th> 
-                      <th>Phone</th> 
-                      <th>Action</th>
-                    </tr>
+                      <th>Parent_name</th> 
+                      <th>Action</th> 
+                  </tr>
+                 
+                  <tr>
+                      <td>{{$category->id}}</td>
+                      
+                      <td>{{$category->name}}</td>
+                      <td>{{$category->parent_name}}</td>
                     
-                    <tr>
-                      <td>{{$user->id}}</td>
-                      <td>
-                        @if($user->images->isNotEmpty())
-                        
-                            <img src="{{ asset('upload/users/'.$user->images()->latest()->first()->url) }}" alt="User Image" width="200px" height="200px">
-                        @else
-                          <h4>#</h4>
-                        @endif
-                    </td>
-                      <td>{{$user->name}}</td>
-                      <td>{{$user->email}}</td>
-                      <td>{{$user->phone}}</td>
                       <td>
                         <div style="display: flex;">
-                        {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a> --}}
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">
-                          <i class="fas fa-eye"></i> 
-                        </a>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" style="margin-left: 5px;">
+                       
+                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning" style="margin-left: 5px;">
                           <i class="fas fa-edit"></i> 
                         </a>
 
-
-                        {{-- <button href="{{ route('users.destroy', $user->id) }}"  class="btn btn-danger">Delete</button> --}}
-                        <form method="POST" action="{{ route('users.destroy',  $user->id) }}" onsubmit="return confirm('Are you sure you want to delete?')">
-                          @method('DELETE')
+                        <form action="{{ route('categories.destroy', $category->id) }}"
+                          id="form-delete{{$category->id}}" method="post">
                           @csrf
-                          <button class="btn btn-danger" type="submit" style="margin-left: 5px;" data-toggle="tooltip" data-placement="top" title="Delete">
-                              <i class="fas fa-trash-alt"></i>
-                          </button>
+                          @method('delete')
+
                         </form>
+
+                        <button class="btn btn-delete btn-danger" style = " margin-left: 5px;" data-id={{ $category->id }}>
+                          <i class="fas fa-trash-alt"></i></button>
+
                       </div>
                       </td> 
                   </tr>
-                    
-                </table
-                
-            </div>
+                  
+              </table
+              {{-- {{  $categories->links()  }} --}}
+          </div>
         </div>
       
       </div>

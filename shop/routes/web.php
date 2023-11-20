@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,5 @@ Route::get('/dashboard', function () {
 Route::resource('roles',RoleController::class)->middleware('auth');
 Route::resource('users',UserController::class)->middleware('auth');
 Route::resource('categories',CategoryController::class)->middleware('auth');
-// Route::resource('/products',ProductController::class)->middleware('auth');
+Route::resource('products',ProductController::class)->middleware('auth');
 require __DIR__.'/auth.php';

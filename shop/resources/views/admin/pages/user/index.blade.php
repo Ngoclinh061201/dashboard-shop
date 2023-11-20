@@ -31,7 +31,7 @@
 
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                  <a href="javascript:history.back()"}}" class="btn btn-info">
+                  <a href="javascript:history.back()" class="btn btn-info">
                     <i class="fas fa-arrow-left"></i> 
                   </a>
               
@@ -68,9 +68,9 @@
                         <td>{{$user->id}}</td>
                         <td>
                           @if($user->images->isNotEmpty())
-                              <img src="{{ asset('upload/users/'.$user->images->first()->url) }}" alt="User Image" width="100px" height="100px">
+                              <img src="{{ asset('upload/'.$user->images->first()->url) }}" alt="User Image" width="100px" height="100px">
                           @else
-                              <h4>#</h4>
+                            <img src="{{ asset('upload/default.png') }}" alt="User Image" width="100px" height="100px">
                           @endif
                       </td>
                         <td>{{$user->name}}</td>

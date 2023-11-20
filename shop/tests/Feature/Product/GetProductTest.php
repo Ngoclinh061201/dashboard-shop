@@ -1,17 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Product;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Http\Response;
 
-
-class DeleteCategoryTest extends TestCase
+class GetProductTest extends TestCase
 {
     public function setUp(): void
     {
@@ -31,41 +30,40 @@ class DeleteCategoryTest extends TestCase
     /**
     @test
      */
-    public function authenticated_user_can_delete_category_if_category_exist(): void
+    public function authenticated_user_can_get_category_if_role_exist(): void
     {   
         $user = User::factory()->make();
         $this->actingAs($user);
 
         $category = Category::factory()->create();
-        $response = $this->delete(route('categories.destroy', $category->id));
-        $this->assertDatabaseMissing('categories', ['id' => $category->id]);
-       
-        $response->assertStatus(Response::HTTP_FOUND);
-        $response->assertRedirect(route('categories.index'));            
-       
+        $response = $this->get(route('categories.show', $category->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('admin.pages.category.show');
+
+        
     }
     /**
     @test
      */ 
-    public function authenticated_user_can_not_delete_category_if_category_not_exist(): void
+    public function authenticated_user_can_not_get_category_if_role_not_exist(): void
     {
         $user = User::factory()->make();
         $this->actingAs($user);
 
-        $category_id= -1;
-        $response = $this->delete(route('categories.destroy', $category_id));
+        $category_id = -1;
+        $response = $this->get(route('categories.show', $category_id));
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
     }
-    /**
-    @test
-     */ 
-    public function unauthenticated_user_can_not_delete_category(){
-        $category = Category::factory()->create();
-        $response = $this->delete(route('categories.destroy', $category->id));
-        $response->assertStatus(Response::HTTP_FOUND);
-        $response->assertRedirect(route('login'));
 
+      /**
+     @test
+     */
+    public function unauthenticated_user_can_not_get_category(){
+        $category = Category::factory()->create();
+        $response = $this->get(route('categories.show', $category->id));
+        $response->assertRedirect(route('login'));
     }
 }
