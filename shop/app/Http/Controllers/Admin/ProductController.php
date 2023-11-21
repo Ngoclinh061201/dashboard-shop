@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
+use App\Http\Requests\Product\CreateProductRequest;
 
 class ProductController extends Controller
 {
@@ -25,8 +26,9 @@ class ProductController extends Controller
         // }else {
             
         // }
+        $categories=$this->productService->getCatgories();
         $products = $this->productService->getLatestProducts();
-        return view('admin.pages.product.index',compact('products'));
+        return view('admin.pages.product.index',compact('products','categories'));
     }
 
     /**
@@ -34,16 +36,25 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // $categories=$this->productService->getCatgories();
-        // return view ('admin.pages.product.create', compact('categories'));
+        $categories=$this->productService->getCatgories();
+        
+        return view ('admin.pages.product.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        dd(10);
+        try {
+            $validatedData = $request->validate($request->rules());
+            $product = $this->productService->createProduct($request);
+            
+            return response()->json(['message' => 'Data saved successfully'], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            
+            return response()->json(['errors' => $e->errors(), 'message' => 'Validation failed'], 422);
+        }
     }
 
     /**

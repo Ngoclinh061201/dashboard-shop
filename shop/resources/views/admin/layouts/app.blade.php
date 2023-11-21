@@ -21,6 +21,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset ('admin/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset ('admin/assets/img/favicon.png')}}">
 
@@ -396,6 +397,14 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script src="{{asset ('admin/assets/base/base.js')}}"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+ 
+<!-- Thư viện Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.1/umd/popper.min.js"></script>
+
+<!-- Thư viện Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   
   @yield('scripts') 
 </body>

@@ -66,5 +66,7 @@ class CategoryRepository
     public function saveImage($request){
         return $this->categories->saveImage($request);
     }
-    
+    public function getCatgories(){
+        return $this->categories->all();
+    }
 }

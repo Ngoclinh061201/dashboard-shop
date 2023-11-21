@@ -33,8 +33,8 @@ class ProductRepository
 
     public function create($dataCreate)
     {
-        return $product =  $this->products->create($dataCreate);
-        
+         $product =  $this->products->create($dataCreate);
+         return $product;
     }
 
     public function getById(string $id)
@@ -61,6 +61,7 @@ class ProductRepository
     public function saveImage($request){
         return $this->products->saveImage($request);
     }
+   
    
     
 }

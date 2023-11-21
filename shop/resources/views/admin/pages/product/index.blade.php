@@ -34,10 +34,10 @@
                   <a href="javascript:history.back()" class="btn btn-info">
                     <i class="fas fa-arrow-left"></i> 
                   </a>
-              
-                  <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#createModal" onclick="showModal()">
-                    <i class="fas fa-plus"></i>
-                </a>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    <i class="fas fa-plus"></i> 
+                  </button>
+                  
                 </div>
 
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -74,31 +74,28 @@
                               @else
                               <img src="{{ asset('upload/default.png') }}" alt="User Image" width="100px" height="100px">
                             @endif 
-                      </td>
+                        </td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->price}}</td>
                         <td>{{$product->sale}}</td>
                         <td>
                           <div style="display: flex;">
-                          {{-- <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a> --}}
-                          <a href="{{ route('products.show', $product->id) }}" class="btn btn-info">
-                            <i class="fas fa-eye"></i> 
-                          </a>
-                          <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning" style="margin-left: 5px;">
-                            <i class="fas fa-edit"></i> 
-                          </a>
-
-
-                          {{-- <button href="{{ route('products.destroy', $product->id) }}"  class="btn btn-danger">Delete</button> --}}
-                          <form action="{{ route('categories.destroy', $product->id) }}"
-                            id="form-delete{{$product->id}}" method="post">
-                            @csrf
-                            @method('delete')
-
-                          </form>
-
-                          <button class="btn btn-delete btn-danger" style = " margin-left: 5px;" data-id={{ $product->id }}>
-                            <i class="fas fa-trash-alt"></i></button>
+                          <!-- Button trigger show modal -->
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal">
+                              <i class="fas fa-eye"></i> 
+                            </button>
+                            @include('admin.pages.product.show')
+                          
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning" style="margin-left: 5px;">
+                              <i class="fas fa-edit"></i> 
+                            </a>
+                            <form action="{{ route('categories.destroy', $product->id) }}"
+                              id="form-delete{{$product->id}}" method="post">
+                              @csrf
+                              @method('delete')
+                            </form>
+                            <button class="btn btn-delete btn-danger" style = " margin-left: 5px;" data-id={{ $product->id }}>
+                              <i class="fas fa-trash-alt"></i></button>
                           </div>
                         </td> 
                     </tr>
@@ -107,44 +104,9 @@
                 {{  $products->links()  }}
             </div>
         </div>
-      
       </div>
-
-      <!-- Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="createModalLabel">Create asvdaProduct</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <!-- Add your form elements here -->
-              <form id="createForm">
-                  <!-- Your form fields go here -->
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="submitForm()">Save changes</button>
-          </div>
-      </div>
-  </div>
-</div>
-<script>
-  // Function to show modal
-  function showModal() {
-      $('#createModal').modal('show');
-  }
-
-  // Function to submit form (you can customize this)
-  function submitForm() {
-      // Do your form submission logic here
-
-      // Close the modal
-      $('#createModal').modal('hide');
-  }
-</script>
+      @include('admin.pages.product.create')
+@endsection
+@section('scripts')
+     <script src="{{asset ('admin/assets/base/product.js')}}" ></script>
 @endsection

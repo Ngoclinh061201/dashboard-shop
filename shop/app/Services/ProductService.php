@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
@@ -10,10 +11,12 @@ use Illuminate\Support\Arr;
 class ProductService
 {
     protected $productRepository;
+    protected $categoryRepository;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function getLatestProducts()
@@ -30,16 +33,16 @@ class ProductService
 
     public function createProduct( $request)
     {
-       
-        $dataCreate = $request->all();
-        $dataCreate['password'] = Hash::make($request->password);
+        $dataCreate = $request->validated();
         $dataCreate['image'] = $this->productRepository->saveImage($request);
         $product = $this->productRepository->create($dataCreate);
+        
         $product->images()->create(["url" => $dataCreate['image']]);
-
-        if (isset($dataCreate['role_ids'])) {
-            $product->roles()->attach($dataCreate['role_ids']);
+        
+        if (isset($dataCreate['category_ids'])) {
+            $product->categories()->attach($dataCreate['category_ids']);
         }
+        return $product;
         
 
     }
@@ -81,6 +84,9 @@ class ProductService
         }
         $product = $this->productRepository->update($product, $dataUpdate);
         return $product;
+    }
+    public function getCatgories(){
+        return $categories=$this->categoryRepository->getCatgories();
     }
     
 
