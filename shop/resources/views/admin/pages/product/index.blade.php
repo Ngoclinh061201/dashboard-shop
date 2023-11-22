@@ -37,6 +37,7 @@
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                     <i class="fas fa-plus"></i> 
                   </button>
+
                   
                 </div>
 
@@ -63,6 +64,7 @@
                         <th>Name</th>
                         <th>Price</th> 
                         <th>Sale</th> 
+                        <th>Category</th> 
                         <th>Action</th>
                     </tr>
                     @foreach ($products as $product)
@@ -79,17 +81,22 @@
                         <td>{{$product->price}}</td>
                         <td>{{$product->sale}}</td>
                         <td>
+                          @foreach($product->categories as $category)
+                              {{$category->name}}<br>
+                          @endforeach
+                        </td>
+                        <td>
                           <div style="display: flex;">
-                          <!-- Button trigger show modal -->
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal">
+                         
+                            <button type="button" class="btn btn-info" style = " margin-left: 5px;"data-bs-toggle="modal" data-bs-target="#showModal" onclick="displayShowModal({{$product->id}})">
                               <i class="fas fa-eye"></i> 
                             </button>
-                            @include('admin.pages.product.show')
-                          
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning" style="margin-left: 5px;">
+                              @include('admin.pages.product.show')
+                            <button type="button" class="btn btn-warning" style = " margin-left: 5px;"data-bs-toggle="modal" data-bs-target="#editModal" onclick="displayEditModal({{$product->id}})">
                               <i class="fas fa-edit"></i> 
-                            </a>
-                            <form action="{{ route('categories.destroy', $product->id) }}"
+                            </button>
+                              @include('admin.pages.product.edit')
+                            <form action="{{ route('products.destroy', $product->id) }}"
                               id="form-delete{{$product->id}}" method="post">
                               @csrf
                               @method('delete')
@@ -105,8 +112,12 @@
             </div>
         </div>
       </div>
-      @include('admin.pages.product.create')
+@include('admin.pages.product.create')
+
+
+      
 @endsection
 @section('scripts')
      <script src="{{asset ('admin/assets/base/product.js')}}" ></script>
+
 @endsection

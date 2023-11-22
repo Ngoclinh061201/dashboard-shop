@@ -23,7 +23,7 @@ class ProductRepository
 
     public function latestproducts()
     {
-        return $this->products->latest('updated_at');
+        return $this->products->with(['categories', 'images'])->latest('updated_at');
     }
 
     public function paginateProducts($products, $perPage)
@@ -37,10 +37,12 @@ class ProductRepository
          return $product;
     }
 
-    public function getById(string $id)
+    public function getByIdWithRelationships(string $id)
     {
-        return $this->products->findOrFail($id);
+        return $this->products->with(['categories', 'images'])->findOrFail($id);
+
     }
+    
 
     public function getProductWithCategories(string $id)
     {

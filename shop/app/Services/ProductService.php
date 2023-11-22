@@ -48,7 +48,7 @@ class ProductService
     }
     public function getProductById(string $id)
     {
-        return $this->productRepository->getById($id);
+        return $this->productRepository->getByIdWithRelationships($id);
     }
     public function getProductWithCategories(string $id)
     {

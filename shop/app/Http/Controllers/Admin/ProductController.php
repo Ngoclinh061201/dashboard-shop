@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\Product\CreateProductRequest;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -28,6 +29,7 @@ class ProductController extends Controller
         // }
         $categories=$this->productService->getCatgories();
         $products = $this->productService->getLatestProducts();
+        
         return view('admin.pages.product.index',compact('products','categories'));
     }
 
@@ -60,9 +62,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product=$this->productService->getProductById($id);
+        
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+        return response()->json(['product' => $product]);
     }
 
     /**
@@ -70,7 +77,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product=$this->productService->getProductById($id);
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+        return response()->json(['product' => $product]);
     }
 
     /**
@@ -87,6 +98,6 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = $this->productService->deleteProduct($id);
-        return redirect()->route('products.index')->with('success', 'edit successfully');
+        return redirect()->route('products.index')->with('success', 'Delete successfully');
     }
 }
