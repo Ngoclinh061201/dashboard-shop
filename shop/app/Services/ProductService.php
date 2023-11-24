@@ -26,9 +26,9 @@ class ProductService
         return $this->productRepository->paginateProducts($products, 5);
     }
 
-    public function searchProducts($searchTerm)
+    public function searchProducts($key, $category)
     {
-        return $this->productRepository->searchProducts($searchTerm);
+        return $this->productRepository->searchProducts($key, $category);
     }
 
     public function createProduct( $request)
@@ -66,12 +66,9 @@ class ProductService
     }
     public function updateProduct(string $id, $request){
         
-        $dataUpdate = $request->except('password');
+        $dataUpdate = $request->all();
         $product = $this->productRepository->getProductWithCategories($id);
-        if($request->password){
-            $dataUpdate['password'] = Hash::make($request['password']);
-
-        }
+        
 
         $currentImage = $product->images()->count()>0 ? $product->images()->first()->url : '';
         $dataUpdate['image'] = $product->updateImage($request, $currentImage);

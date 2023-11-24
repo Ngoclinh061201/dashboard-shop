@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -18,18 +19,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $searchTerm = $request->input('search', '');
-        // if ($request->has('search')) {
-        //     // $products = $this->productService->searchProducts($searchTerm);
-            
-        // }else {
-            
-        // }
+            // get search products
+        $keySearch = $request->input('searchInput', '');
+        $categorySearch=$request->input('searchCategory', '');
+      
+        if (!empty($keySearch) || !empty($categorySearch)) { 
+            $products = $this->productService->searchProducts($keySearch, $categorySearch);
+            $roles = auth()->user()->roles;
+            if ($products) {
+                return response()->json(['product' => $products, 'roles' => $roles]);
+            }
+        } else {
+           //  get all products
+            $products = $this->productService->getLatestProducts();
+        }
         $categories=$this->productService->getCatgories();
-        $products = $this->productService->getLatestProducts();
-        
         return view('admin.pages.product.index',compact('products','categories'));
     }
 
@@ -38,9 +44,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories=$this->productService->getCatgories();
-        
-        return view ('admin.pages.product.create', compact('categories'));
+       
     }
 
     /**
@@ -87,9 +91,18 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        
+        try {
+            $validatedData = $request->validate($request->rules());
+            $product = $this->productService->updateProduct($id, $request);
+            
+            return response()->json(['message' => 'Update successfully'], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            
+            return response()->json(['errors' => $e->errors(), 'message' => 'Validation failed'], 422);
+        }
     }
 
     /**

@@ -66,4 +66,12 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%' . $searchTerm . '%');
         });
     }
+    public function hasAnyRole($roles)
+    {
+        return $this->roles()->whereIn('name', (array) $roles)->exists();
+    }
+    public function getRoleDisplayNamesAttribute()
+    {
+        return $this->roles->pluck('display_name')->implode(', ');
+    }
 }

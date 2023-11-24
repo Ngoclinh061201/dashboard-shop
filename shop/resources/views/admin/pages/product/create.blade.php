@@ -22,7 +22,7 @@
               </div>
               <div class="col-md-6 ml-auto">
                 <div class="input-group-static" style="max-width: 100%; max-height: 300px; overflow: hidden;">
-                  <img src="" id="show-image-create" alt="Image Preview" style="width: 100%; height: 100%; display: block;">
+                  <img class="img-fluid border-radius-lg" src="" id="show-image-create" alt="Image Preview" style="width: 100%; height: 100%; display: block;">
                 </div>
               </div>
             </div>

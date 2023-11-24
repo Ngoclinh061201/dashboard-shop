@@ -25,7 +25,6 @@ class CreateProductRequest extends FormRequest
             'name'=> 'required',
             'description'=>'required',
             'price'=>'required',
-            'sale'=>'required',
             'category_ids'=>'required',
         ];
     }

@@ -14,10 +14,10 @@ class ProductRepository
         $this->products = $products;
     }
 
-    public function searchProducts($searchTerm)
+    public function searchProducts($key, $category)
     {
         
-        $products= $this->products->search($searchTerm);
+        $products= $this->products->search($key, $category);
         return $products = $this->paginateProducts($products, 5);
     }
 

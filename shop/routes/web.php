@@ -23,14 +23,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', function () {
-    return view('welcome')->name('index');
-});
 Route::get('/dashboard', function () {
     return view('admin.pages.dashboard.index');
 })->middleware('auth')->name('dashboard');
-Route::resource('roles',RoleController::class)->middleware('auth');
+
 Route::resource('users',UserController::class)->middleware('auth');
-Route::resource('categories',CategoryController::class)->middleware('auth');
-Route::resource('products',ProductController::class)->middleware('auth');
+
+Route::prefix('/products')->middleware(['auth', 'role:user,admin,super-admin'])->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create')->middleware('role:admin');
+    Route::post('/', [ProductController::class, 'store'])->name('products.store')->middleware('role:admin');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit')->middleware('role:admin,super-admin');
+    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update')->middleware('role:admin,super-admin');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy')->middleware('role:super-admin');
+});
+Route::resource('categories',CategoryController::class)->middleware(['auth', 'role:admin']);
+
+Route::resource('roles',RoleController::class)->middleware('auth', 'role:super-admin');
+
 require __DIR__.'/auth.php';

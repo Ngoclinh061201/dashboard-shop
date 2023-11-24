@@ -80,6 +80,7 @@ class UserService
         if (isset($dataUpdate['role_ids'])) {
             $user->roles()->sync($dataUpdate['role_ids']);
         }
+        
         $user = $this->userRepository->update($user, $dataUpdate);
         return $user;
     }

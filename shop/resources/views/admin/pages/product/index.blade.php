@@ -34,30 +34,41 @@
                   <a href="javascript:history.back()" class="btn btn-info">
                     <i class="fas fa-arrow-left"></i> 
                   </a>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                    <i class="fas fa-plus"></i> 
-                  </button>
-
+                  @if( auth()->user()->hasAnyRole(['admin', 'super-admin']) )
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                          <i class="fas fa-plus"></i> 
+                      </button>
+                  @endif
+                                    
                   
                 </div>
-
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                  <div class="search-container" style="flex-grow: 1; display: flex; align-items: center;">
-                    <div style=" width: 80%; "> <!-- Thay đổi ở đây -->
-                      <input name="search" type="text" id="searchInput" placeholder="Search..." style="width: 100%; padding: 10px;"value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="input-group input-group-outline my-3">
+                      <select class="form-control" id="searchCategory">
+                        <option value="">All</option>
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                      </select>
                     </div>
-              
-                    <button type="button" onclick="search()" style="margin-left: 10px; background-color: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px;">
-                        Search
-                    </button>
-                    <button style="background-color: #ff0000; color: white; border: none; padding: 10px; border-radius: 5px; margin-left:10px">
-                      <a href="{{ route('products.index') }}" style="text-decoration: none; color: inherit;">
-                          Reset
-                      </a>
-                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-outline my-3">
+                        <input name="search" type="text" class="form-control" id="searchInput" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" style =" margin-left:5px; margin-top:15px" onclick="searchProduct()" >
+                          <i class="fas fa-search"></i> 
+                        </button>
+                        <button type="button" class="btn btn-danger" style =" margin-left:5px ; margin-top:15px" onclick="resetSearch()" >
+                          <i class="fas fa-trash-alt"></i> 
+                        </button>
                   </div>
                 </div>
                 <table class="table table-hover">
+                  <thead>
                     <tr>
                         <th>#</th>
                         <th>Image</th>
@@ -67,15 +78,13 @@
                         <th>Category</th> 
                         <th>Action</th>
                     </tr>
+                  </thead>
+                  <tbody id = "searchProductsIndex">
                     @foreach ($products as $product)
                     <tr>
                         <td>{{$product->id}}</td>
                         <td>
-                          @if($product->images->isNotEmpty())
-                              <img src="{{ asset('upload/'.$product->images->first()->url) }}" alt="Product Image" width="100px" height="100px">
-                              @else
-                              <img src="{{ asset('upload/default.png') }}" alt="User Image" width="100px" height="100px">
-                            @endif 
+                          <img class="img-fluid border-radius-lg" src="{{ $product->image_url }}" alt="Product Image" width="100px" height="100px">
                         </td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->price}}</td>
@@ -88,36 +97,43 @@
                         <td>
                           <div style="display: flex;">
                          
-                            <button type="button" class="btn btn-info" style = " margin-left: 5px;"data-bs-toggle="modal" data-bs-target="#showModal" onclick="displayShowModal({{$product->id}})">
+                            <button type="button" class="btn btn-success" style = " margin-left: 5px;"onclick="displayShowModal({{$product->id}})">
                               <i class="fas fa-eye"></i> 
                             </button>
-                              @include('admin.pages.product.show')
-                            <button type="button" class="btn btn-warning" style = " margin-left: 5px;"data-bs-toggle="modal" data-bs-target="#editModal" onclick="displayEditModal({{$product->id}})">
+                            @if( auth()->user()->hasAnyRole(['admin', 'superadmin']))
+                            <button type="button" class="btn btn-warning" style = " margin-left: 5px;" onclick="displayEditModal({{$product->id}})">
                               <i class="fas fa-edit"></i> 
                             </button>
-                              @include('admin.pages.product.edit')
+                            @endif
                             <form action="{{ route('products.destroy', $product->id) }}"
                               id="form-delete{{$product->id}}" method="post">
                               @csrf
                               @method('delete')
                             </form>
+                            @if( auth()->user()->hasAnyRole('super-admin'))
                             <button class="btn btn-delete btn-danger" style = " margin-left: 5px;" data-id={{ $product->id }}>
                               <i class="fas fa-trash-alt"></i></button>
+                            @endif
                           </div>
                         </td> 
                     </tr>
                     @endforeach
-                </table
-                {{  $products->links()  }}
+                  </tbody>
+                  </table>
+                  <div id="paginationLinks">
+                    {{ $products->links() }}
+                </div>
             </div>
         </div>
       </div>
+
 @include('admin.pages.product.create')
+@include('admin.pages.product.edit')
+@include('admin.pages.product.show')    
 
-
-      
 @endsection
 @section('scripts')
-     <script src="{{asset ('admin/assets/base/product.js')}}" ></script>
+<script src="{{asset ('admin/assets/base/base.js')}}" ></script>
+<script src="{{asset ('admin/assets/base/product.js')}}" ></script>
 
 @endsection

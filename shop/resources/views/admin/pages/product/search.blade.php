@@ -1,9 +1,9 @@
-<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
-  <form id ="showForm">
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <form id ="searchForm">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="showModalLabel">Show Product</h5>
+          <h5 class="modal-title" id="searchModalLabel">Product</h5>
         </div>
         <div class="modal-body">
           <table class="table table-hover" >
@@ -16,10 +16,13 @@
              <th>Sale</th> 
              <th>Category</th>
              <th>Description</th>
+             <th>Action</th>
             </tr> 
             </thead>
-           <tbody id = "productTableBody">
-           </tbody>
+            <tbody id = "searchProductBody">
+              <tr>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div class="modal-footer">

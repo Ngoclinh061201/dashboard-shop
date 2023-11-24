@@ -80,28 +80,10 @@
         </div>
       
       </div>
-      <script>
-        function search() {
-            // Lấy giá trị từ ô nhập
-            var searchTerm = document.getElementById('searchInput').value;
       
-            // Lấy URL hiện tại
-            var currentUrl = new URL(window.location.href);
       
-            // Cập nhật hoặc thêm query parameter 'search'
-            currentUrl.searchParams.set('search', searchTerm);
-      
-            // Chuyển hướng đến URL mới
-            window.location.href = currentUrl.toString();
-        }
-        function resetSearch() {
-              // Xóa giá trị của input search
-              document.getElementById('searchInput').value = '';
-      
-              // Xóa các query trong URL (nếu có)
-              var urlWithoutQuery = window.location.href.split('?')[0];
-              history.pushState({}, document.title, urlWithoutQuery);
-          }
-      </script>
-      
+@endsection
+@section('scripts')
+<script src="{{asset ('admin/assets/base/base.js')}}" ></script>
+
 @endsection

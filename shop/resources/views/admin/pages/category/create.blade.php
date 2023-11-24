@@ -57,18 +57,10 @@
             </div>
         </div>
     </div>
-    <script>
-        function previewImage() {
-            var input = document.getElementById('image-input');
-            var img = document.getElementById('show-image');
-            var reader = new FileReader();
-    
-            reader.onload = function(e) {
-                img.src = e.target.result;
-            };
-    
-            reader.readAsDataURL(input.files[0]);
-        }
-    </script>
+   
+@endsection
+@section('scripts')
+<script src="{{asset ('admin/assets/base/base.js')}}" ></script>
+
 @endsection
 

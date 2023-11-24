@@ -1,5 +1,5 @@
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <form id ="editForm">
+    <form id ="editFormProduct">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -10,18 +10,16 @@
                 <div class="row mb-3">
                   <div class="col-md-6">
                       <div class="input-group-static">
-                          <label>Old Image </label>
-                          <input type="text"  class="form-control" id="old-image">
                           <label>Create New Image</label>
                           <input type="file" accept="image/*" class="form-control" id="edit-image" name="image"placeholder="Image" onchange="previewImage('edit-image', 'show-image-edit')">
-                          <label>ID</label>
-                          <input type="text" class="form-control" id="edit-id" >
+                          <input type="text"  class="form-control" id="old-image" style="display: none;">
+                          <input type="text" class="form-control" id="edit-id" style="display: none;" >
                           </div>
 
                       <div class="input-group-static mt-6">
                           <label>Name</label>
                           <input type="text" value="{{ old('name') }}" class="form-control" id="edit-name" name="name" placeholder="Name" >
-                          <span id="name-error" class="text-danger"></span>
+                          <span id="name-error-edit" class="text-danger"></span>
                       </div>
                   </div>
                   <div class="col-md-6">
@@ -35,14 +33,14 @@
                     <div class="input-group-static">
                       <label>Price</label>
                       <input type="number" value="{{ old('price') }}" class="form-control" id="edit-price" name="price" placeholder="Price" >
-                      <span id="price-error" class="text-danger"></span>
+                      <span id="price-error-edit" class="text-danger"></span>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="input-group-static">
                       <label>Sale</label>
                       <input type="number" value="{{ old('sale') }}" class="form-control" id="edit-sale" name="sale" placeholder="Sale" >
-                      <span id="sale-error" class="text-danger"></span>
+                      <span id="sale-error-edit" class="text-danger"></span>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -53,6 +51,7 @@
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
+                        <span id="category-error-edit" class="text-danger"></span>
                     </div>
                   </div>
                 </div>
@@ -61,7 +60,7 @@
                   <div class="input-group-static">
                     <label>Description</label>
                     <input type="text" value="{{ old('description') }}" class="form-control" id="edit-description" name="description" placeholder="description" >
-                    <span id="description-error" class="text-danger"></span>
+                    <span id="description-error-edit" class="text-danger"></span>
                   </div>
                 </div>
               </div>
