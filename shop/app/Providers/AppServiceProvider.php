@@ -18,20 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->bind(RoleRepository::class, function () {
-        //     return new RoleRepository($this->app->make(Role::class));
-        // });
-
-        // $this->app->bind(RoleService::class, function ($app) {
-        //     return new RoleService(
-        //         $app->make(RoleRepository::class),
-        //         $app->make(PermissionRepository::class)
-        //     );
-        // });
-
-        // $this->app->bind(PermissionRepository::class, function ($app) {
-        //     return new PermissionRepository($this->app->make(Permission::class));
-        // });
+       //
     }
 
     /**

@@ -7,26 +7,28 @@ use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+
 class CategoryController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     protected $categoryService;
-    public function __construct(CategoryService $categoryService){
+
+    public function __construct(CategoryService $categoryService)
+    {
         $this->categoryService = $categoryService;
     }
-    
+
     public function index(Request $request)
     {
         $searchTerm = $request->input('search', '');
         if ($request->has('search')) {
             $categories = $this->categoryService->searchCategories($searchTerm);
-            
-        }else {
+        } else {
             $categories = $this->categoryService->getLatestCategories();
         }
-        
         return view('admin.pages.category.index',compact('categories', 'searchTerm'));
     }
 
@@ -34,7 +36,6 @@ class CategoryController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-
     {
         $parentCategories = $this->categoryService->getParents();
         return view ('admin.pages.category.create', compact('parentCategories'));
@@ -66,7 +67,6 @@ class CategoryController extends Controller
         $parentCategories = $this->categoryService->getParents();
         $category = $this->categoryService->getCategoryWithChildrens($id);
         return view ('admin.pages.category.edit', compact('parentCategories', 'category'));
-
     }
 
     /**
@@ -77,7 +77,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->updateCategory($id, $request );
         return redirect()->route('categories.index')->with('success', 'edit successfully');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */

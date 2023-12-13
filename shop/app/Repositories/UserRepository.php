@@ -4,7 +4,6 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-
 class UserRepository
 {
     protected $users;
@@ -16,7 +15,6 @@ class UserRepository
 
     public function searchUsers($searchTerm)
     {
-        
         $users= $this->users->search($searchTerm);
         return $users = $this->paginateUsers($users, 5);
     }
@@ -34,7 +32,6 @@ class UserRepository
     public function create($dataCreate)
     {
         return $user =  $this->users->create($dataCreate);
-        
     }
 
     public function getById(string $id)
@@ -49,7 +46,6 @@ class UserRepository
 
     public function update(User $user, array $data)
     {
-       
         $user = $user->update($data);
         return $user;
     }
@@ -58,8 +54,8 @@ class UserRepository
     {
         $user->delete();
     }
+
     public function saveImage($request){
         return $this->users->saveImage($request);
-    }
-    
+    } 
 }

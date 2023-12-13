@@ -69,11 +69,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        
         $user = $this->userService->getUserWithRoles($id);
-       
         $roles = $this->roleService->getRoles()->groupBy('group');
-        
         return view('admin.pages.user.edit', compact('user', 'roles'));
     }
 
@@ -82,7 +79,6 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        // dd($request->all());
         $user = $this->userService->updateUser($id, $request);
         return redirect()->route('users.index')->with('success', 'Update successfully');
     }

@@ -97,11 +97,11 @@
                         <td>
                           <div style="display: flex;">
                          
-                            <button type="button" class="btn btn-success" style = " margin-left: 5px;"onclick="displayShowModal({{$product->id}})">
+                            <button type="button" class="btn btn-success" style = " margin-left: 5px;"onclick="showProduct({{$product->id}})">
                               <i class="fas fa-eye"></i> 
                             </button>
                             @if( auth()->user()->hasAnyRole(['admin', 'superadmin']))
-                            <button type="button" class="btn btn-warning" style = " margin-left: 5px;" onclick="displayEditModal({{$product->id}})">
+                            <button type="button" class="btn btn-warning" style = " margin-left: 5px;" onclick="editProduct({{$product->id}})">
                               <i class="fas fa-edit"></i> 
                             </button>
                             @endif

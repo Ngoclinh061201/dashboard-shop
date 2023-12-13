@@ -10,8 +10,7 @@ $(document).ready(function () {
     });
 });
 
-//create product
-function submitCreateModal() {
+function storeProduct() {
     var formData = new FormData($('#createForm')[0]);
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
     formData.append('_token', csrfToken);
@@ -38,22 +37,17 @@ function submitCreateModal() {
     });
 }
 
-//display modal show product details
-function displayShowModal(product_id) {
+function showProduct(product_id) {
     $.ajax({
             url: "/products/" + product_id,
             method: "GET",
             success: function(response) {
                 if (response.hasOwnProperty('product')) {
                     var product = response.product;
-
-                    // Tạo HTML cho danh sách các categories
                     var categoriesHtml = "";
                     for (var i = 0; i < product.categories.length; i++) {
                         categoriesHtml += `${product.categories[i].name}<br>`;
                     }
-                    
-                    // Tạo HTML cho từng sản phẩm
                     var productHTML = `<tr>
                                           <td>${product.id}</td>
                                           <td>${product.images.length > 0 ? `<img src="upload/${product.images[0].url}" alt="Product Image" width="200px" height="200px">` : '<h4>#</h4>'}</td>
@@ -64,10 +58,8 @@ function displayShowModal(product_id) {
                                           <td>${product.description}</td>
                                       </tr>`;
 
-                        // Thêm sản phẩm vào modal show
                         $('#showModal #productTableBody').append(productHTML);
                     
-                    // Hiển thị modal
                     $('#showModal').modal('show');
                 }
             },
@@ -77,8 +69,7 @@ function displayShowModal(product_id) {
           });
 }
 
-// display modal edit product
-function displayEditModal(product_id){
+function editProduct(product_id){
     $.ajax({
         url: "/products/" + product_id+ "/edit",
         method: "GET",
@@ -95,15 +86,12 @@ function displayEditModal(product_id){
                 
                 var imageName = product.images[0].url;
                 $("#show-image-edit").attr("src", "upload/" + imageName);
-                // lay tat ca categories de kiem tra
                 var categoryIds = product.categories.map(function(category) {
                     return category.id;
                 });
                 $("#edit-category option").each(function() {
                     var categoryId = parseInt($(this).val());
-                    // Kiểm tra xem categoryId có trong mảng CategoryIds không
                     if (categoryIds.indexOf(categoryId) !== -1) {
-                        // Nếu có, option selected
                         $(this).prop("selected", true);
                     } else {
                         $(this).prop("selected", false);
@@ -117,8 +105,7 @@ function displayEditModal(product_id){
     });
 }
 
-//update product
-function submitEditModal() {
+function updateProduct() {
     var productId = $('#edit-id').val();
     var formData = new FormData($('#editFormProduct')[0]);
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -138,7 +125,6 @@ function submitEditModal() {
         },
         error: function (response) {
             var errors = response.responseJSON.errors;
-        // Lặp qua từng trường và hiển thị thông báo lỗi
             for (var field in errors) {
                 if (errors.hasOwnProperty(field)) {
                     var errorMessage = errors[field][0];
@@ -149,9 +135,8 @@ function submitEditModal() {
     });
 }
 
-//search product by key and category
 function searchProduct() {
-    var searchCategory = document.getElementById('searchCategory').value;     // Lấy giá trị từ các trường input và select search product
+    var searchCategory = document.getElementById('searchCategory').value;   
     var searchInput = document.getElementById('searchInput').value;
     $.ajax({
         url: '/products',
@@ -199,7 +184,7 @@ function searchProduct() {
                             </tr>
                         `;
                     
-                        $('#searchProductsIndex').append(productHTML); // show du lieu len view index
+                        $('#searchProductsIndex').append(productHTML); 
                     }
                 }else {
                     $('#searchProductsIndex').append('<tr><td colspan="7" style="text-align: center;">Không có kết quả</td></tr>');

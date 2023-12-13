@@ -5,7 +5,6 @@ $.ajaxSetup({
     },
 });
 
-// delete everything
 $(document).on("click", ".btn-delete", function (e) {
     e.preventDefault();
     let id = $(this).data("id");
@@ -16,7 +15,6 @@ $(document).on("click", ".btn-delete", function (e) {
         .catch();
 });
 
-//comfirm when delete anything
 function confirmDelete() {
     return new Promise((resolve, reject) => {
         Swal.fire({
@@ -36,8 +34,7 @@ function confirmDelete() {
         });
     });
 }
-
-// search      
+     
 function search() {
     var searchTerm = document.getElementById('searchInput').value;
     var currentUrl = new URL(window.location.href);
@@ -45,7 +42,6 @@ function search() {
     window.location.href = currentUrl.toString();
 } 
 
-//reset search
 function resetSearch() {
     document.getElementById('searchInput').value = '';
     var urlWithoutQuery = window.location.href.split('?')[0];
@@ -53,7 +49,6 @@ function resetSearch() {
     window.location.reload();
 }
 
-//preview image
 function previewImage(input_image, output_image) {
     var input = document.getElementById(input_image);
     var img = document.getElementById(output_image);

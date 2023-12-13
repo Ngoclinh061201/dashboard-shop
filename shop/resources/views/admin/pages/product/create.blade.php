@@ -10,14 +10,13 @@
             <div class="row mb-3">
               <div class="col-md-6">
                   <div class="input-group-static">
-                      <label>Image</label>
-                      <input type="file" accept="image/*" class="form-control" id="create-image" name="image"placeholder="Image" onchange="previewImage('create-image', 'show-image-create')">
-                      {{-- <span id="image-error" class="text-danger"></span> --}}
+                    <label>Image</label>
+                    <input type="file" accept="image/*" class="form-control" id="create-image" name="image"placeholder="Image" onchange="previewImage('create-image', 'show-image-create')">
                   </div>
                   <div class="input-group-static mt-6">
-                      <label>Name</label>
-                      <input type="text" value="{{ old('name') }}" class="form-control" id="create-name" name="name" placeholder="Name" >
-                      <span id="name-error-create" class="text-danger"></span>
+                    <label>Name</label>
+                    <input type="text" value="{{ old('name') }}" class="form-control" id="create-name" name="name" placeholder="Name" >
+                    <span id="name-error-create" class="text-danger"></span>
                   </div>
               </div>
               <div class="col-md-6 ml-auto">
@@ -65,7 +64,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn bg-gradient-info" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn bg-gradient-primary"onclick="submitCreateModal()">Save changes</button>
+          <button type="button" class="btn bg-gradient-primary"onclick="storeProduct()">Save changes</button>
         </div>
       </div>
     </div>

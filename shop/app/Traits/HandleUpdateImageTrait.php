@@ -7,6 +7,7 @@ use Intervention\Image\Facades\Image;
 trait HandleUpdateImageTrait 
 {
     protected $path = "upload/";
+
     public function veryfy($request){
         return $request->has('image');
     }
@@ -21,17 +22,18 @@ trait HandleUpdateImageTrait
             return $name;
         }
     }
+
     public function deleteImage( $imageName){
         if ($imageName && file_exists($this->path.$imageName)) {
             unlink($this->path.$imageName);
         }
     }
+
     public function updateImage( $request, $currentImage){
         if($this->veryfy($request)){
             $this->deleteImage($currentImage);
             return $this->saveImage($request);
         }
         return $currentImage;
-
     }
 }

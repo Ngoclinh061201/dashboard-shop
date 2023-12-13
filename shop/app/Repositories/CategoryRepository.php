@@ -4,7 +4,6 @@ namespace App\Repositories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Hash;
 
-
 class CategoryRepository
 {
     protected $categories;
@@ -18,6 +17,7 @@ class CategoryRepository
     {
         return $categories= $this->categories->search($searchTerm);
     }
+
     public function getParents(){
         return $this->categories->getParents();
     }
@@ -35,7 +35,6 @@ class CategoryRepository
     public function create($dataCreate)
     {
         return $categories =  $this->categories->create($dataCreate);
-        
     }
 
     public function getById(string $id)
@@ -47,6 +46,7 @@ class CategoryRepository
     {
         return $this->categories->with('parent')->findOrFail($id);
     }
+
     public function getCategoryWithChildrens(string $id)
     {
         return $this->categories->with('childrens')->findOrFail($id);
@@ -54,7 +54,6 @@ class CategoryRepository
 
     public function update(Category $category, array $data)
     {
-       
         $category = $category->update($data);
         return $category;
     }
@@ -63,9 +62,11 @@ class CategoryRepository
     {
         $category->delete();
     }
+
     public function saveImage($request){
         return $this->categories->saveImage($request);
     }
+    
     public function getCatgories(){
         return $this->categories->all();
     }

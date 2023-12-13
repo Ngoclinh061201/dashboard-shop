@@ -19,14 +19,11 @@ class CheckRole
     public function handle($request, Closure $next, ...$roles)
     {
         $user = User::find(Auth::id());
-        // dd($user->roles);
-        // dd($roles);
-        foreach($roles as $role){
+        foreach ($roles as $role) {
             if ($user->hasAnyRole($role)) {
                 return $next($request);
             }
         }
-
         abort(403, 'Unauthorized action.');
     }
 }

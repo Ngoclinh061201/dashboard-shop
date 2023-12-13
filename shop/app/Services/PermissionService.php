@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Repositories\RoleRepository;
 use App\Repositories\PermissionRepository;
 
-class PermissionService{
+class PermissionService
+{
     protected $permissionRepository;
     
     public function __construct(PermissionRepository $permissionRepository)

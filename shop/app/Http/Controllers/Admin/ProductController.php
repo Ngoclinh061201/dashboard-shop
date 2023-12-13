@@ -11,9 +11,9 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-
     protected $productService;
-    public function __construct(ProductService $productService){
+    public function __construct(ProductService $productService)
+    {
         $this->productService = $productService;
     }
     /**
@@ -21,10 +21,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-            // get search products
         $keySearch = $request->input('searchInput', '');
         $categorySearch=$request->input('searchCategory', '');
-      
         if (!empty($keySearch) || !empty($categorySearch)) { 
             $products = $this->productService->searchProducts($keySearch, $categorySearch);
             $roles = auth()->user()->roles;
@@ -32,21 +30,17 @@ class ProductController extends Controller
                 return response()->json(['product' => $products, 'roles' => $roles]);
             }
         } else {
-           //  get all products
             $products = $this->productService->getLatestProducts();
         }
         $categories=$this->productService->getCatgories();
         return view('admin.pages.product.index',compact('products','categories'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-       
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -55,10 +49,8 @@ class ProductController extends Controller
         try {
             $validatedData = $request->validate($request->rules());
             $product = $this->productService->createProduct($request);
-            
             return response()->json(['message' => 'Data saved successfully'], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            
             return response()->json(['errors' => $e->errors(), 'message' => 'Validation failed'], 422);
         }
     }
@@ -69,8 +61,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product=$this->productService->getProductById($id);
-        
-        if (!$product) {
+        if (!$product){
             return response()->json(['error' => 'Product not found'], 404);
         }
         return response()->json(['product' => $product]);
@@ -93,14 +84,11 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, string $id)
     {
-        
         try {
             $validatedData = $request->validate($request->rules());
             $product = $this->productService->updateProduct($id, $request);
-            
             return response()->json(['message' => 'Update successfully'], 200);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            
+        } catch (\Illuminate\Validation\ValidationException $e){
             return response()->json(['errors' => $e->errors(), 'message' => 'Validation failed'], 422);
         }
     }

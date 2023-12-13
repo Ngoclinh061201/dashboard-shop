@@ -67,7 +67,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn bg-gradient-info" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn bg-gradient-primary" onclick="submitEditModal()">Save changes</button>
+            <button type="button" class="btn bg-gradient-primary" onclick="updateProduct()">Save changes</button>
           </div>
         </div>
       </div>

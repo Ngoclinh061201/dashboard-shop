@@ -32,7 +32,6 @@ class RoleController extends Controller
         }else {
             $roles = $this->roleService->getLatestRoles();
         }
-        
         return view('admin.pages.role.index',compact('roles', 'searchTerm'));
     }
 

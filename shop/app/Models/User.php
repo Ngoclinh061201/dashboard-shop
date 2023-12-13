@@ -51,14 +51,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user');
     }
+
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
     public function scopeSearch($query, $searchTerm)
     {
         return $query->where(function($query) use ($searchTerm) {
@@ -66,10 +69,12 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%' . $searchTerm . '%');
         });
     }
+
     public function hasAnyRole($roles)
     {
         return $this->roles()->whereIn('name', (array) $roles)->exists();
     }
+    
     public function getRoleDisplayNamesAttribute()
     {
         return $this->roles->pluck('display_name')->implode(', ');

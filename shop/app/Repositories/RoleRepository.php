@@ -3,7 +3,6 @@ namespace App\Repositories;
 
 use App\Models\Role;
 
-
 class RoleRepository
 {
     protected $roles;
@@ -53,6 +52,7 @@ class RoleRepository
     {
         $role->delete();
     }
+    
     public function getRoles()
     {
         return $this->roles->all();

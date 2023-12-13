@@ -4,7 +4,6 @@ namespace App\Repositories;
 use App\Models\Product;
 use Illuminate\Support\Facades\Hash;
 
-
 class ProductRepository
 {
     protected $products;
@@ -16,7 +15,6 @@ class ProductRepository
 
     public function searchProducts($key, $category)
     {
-        
         $products= $this->products->search($key, $category);
         return $products = $this->paginateProducts($products, 5);
     }
@@ -33,17 +31,15 @@ class ProductRepository
 
     public function create($dataCreate)
     {
-         $product =  $this->products->create($dataCreate);
-         return $product;
+        $product =  $this->products->create($dataCreate);
+        return $product;
     }
 
     public function getByIdWithRelationships(string $id)
     {
         return $this->products->with(['categories', 'images'])->findOrFail($id);
-
     }
     
-
     public function getProductWithCategories(string $id)
     {
         return $this->products->with('categories')->findOrFail($id);
@@ -51,7 +47,6 @@ class ProductRepository
 
     public function update(Product $product, array $data)
     {
-       
         $product = $product->update($data);
         return $product;
     }
@@ -60,10 +55,8 @@ class ProductRepository
     {
         $product->delete();
     }
+
     public function saveImage($request){
         return $this->products->saveImage($request);
     }
-   
-   
-    
 }
